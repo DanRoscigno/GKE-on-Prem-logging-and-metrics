@@ -18,10 +18,10 @@ data:
       index.codec: best_compression
 
     output.elasticsearch:
-      hosts: [ "35.185.25.133:9200", "34.73.20.29:9200", "34.73.151.165:9200"]
+            hosts: ${ELASTICSEARCH_HOSTS}
 
     setup.kibana:
-      host: "35.185.25.133:5601"
+      host: ${KIBANA_HOST}
 ---
 # Run filebeat setup
 apiVersion: batch/v1
@@ -49,6 +49,11 @@ spec:
             secretKeyRef:
               name: elastic-stack
               key: elasticsearch-hosts-ports
+        - name: KIBANA_HOST
+          valueFrom:
+            secretKeyRef:
+              name: elastic-stack
+              key: kibana-host-port
         securityContext:
           runAsUser: 0
         volumeMounts:
