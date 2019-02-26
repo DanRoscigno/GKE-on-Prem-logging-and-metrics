@@ -88,8 +88,7 @@ data:
       - add_docker_metadata:
 
     output.elasticsearch:
-            #hosts: ['${ELASTICSEARCH_HOSTS:elasticsearch:9200}']
-            hosts: [ "35.185.25.133:9200", "34.73.20.29:9200", "34.73.151.165:9200"]
+            hosts: ${ELASTICSEARCH_HOSTS}
     
 ---
 apiVersion: extensions/v1beta1
