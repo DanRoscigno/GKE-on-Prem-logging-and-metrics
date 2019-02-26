@@ -1,14 +1,30 @@
 # GKE-on-Prem-logging-and-metrics
 
+### Grab the configuration
+`git clone https://github.com/DanRoscigno/GKE-on-Prem-logging-and-metrics.git`
+or
+Click the *Clone or Download* button at the top right of https://github.com/DanRoscigno/GKE-on-Prem-logging-and-metrics
+
+All of the rest of the commands will be run from the directory `GKE-on-Prem-logging-and-metrics`
+
 ### Set the cluster-admin-binding
 Logging and metrics tools like Filebeat, Fluentd, Metricbeat, Prometheus, etc. run as DameonSets.  To deploy DaemonSets you need the cluster role binding `cluster-admin-binding`.  Create it now:
 
 `kubectl create clusterrolebinding cluster-admin-binding  --clusterrole=cluster-admin --user=<the email address associated with your GKE account>`
 
+### Deploy example application
+This uses the Guestbook app from the Kubernetes docs.  The YAML has been concatenated into a single manifest, and Apache HTTP mod Status has been enabled for metrics gathering.
+
+`kubectl create -f guestbook.yaml`
+
 ### Create secrets
+Rather than putting the Elasticsearch and Kibana endpoints into the manifest files they are provided to the Filebeat pods as k8s secrets.  Edit the files `elasticsearch-hosts-ports` and `kibana-host-port` and then create the secret:
+
 `kubectl create secret generic elastic-stack --from-file=./elasticsearch-hosts-ports --from-file=./kibana-host-port --namespace=kube-system`
 
 ### Deploy index patterns, visualizations, dashboards, and machine learning jobs
+Filebeat and Metricbeat provide the configuration for things like web servers, caches, proxies, operating systems, container environments, databases, etc.  These are referred to as *Beats modules*.  By deploying these configurations you will be populating Elasticsearch and Kibana with visualizations, dashboards, machine learning jobs, etc.  
+
 `kubectl create -f filebeat-setup.yaml`
 
 ### Deploy the Filebeat DaemonSet
