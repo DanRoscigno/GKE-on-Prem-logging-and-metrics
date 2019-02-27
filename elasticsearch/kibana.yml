@@ -1,0 +1,3 @@
+server.host: "external-elastic-one"
+
+elasticsearch.hosts: ["http://external-elastic-one:9200", "http://external-elastic-two:9200", "http://external-elastic-three:9200"]
