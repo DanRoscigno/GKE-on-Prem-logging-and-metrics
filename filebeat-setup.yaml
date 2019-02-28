@@ -18,7 +18,7 @@ data:
       index.codec: best_compression
 
     output.elasticsearch:
-            hosts: ${ELASTICSEARCH_HOSTS}
+      hosts: ${ELASTICSEARCH_HOSTS}
 
     setup.kibana:
       host: ${KIBANA_HOST}

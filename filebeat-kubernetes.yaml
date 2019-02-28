@@ -88,7 +88,7 @@ data:
       - add_docker_metadata:
 
     output.elasticsearch:
-            hosts: ${ELASTICSEARCH_HOSTS}
+      hosts: ${ELASTICSEARCH_HOSTS}
     
 ---
 apiVersion: extensions/v1beta1
