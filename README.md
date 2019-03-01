@@ -25,20 +25,30 @@ Rather than putting the Elasticsearch and Kibana endpoints into the manifest fil
 ### Deploy index patterns, visualizations, dashboards, and machine learning jobs
 Filebeat and Metricbeat provide the configuration for things like web servers, caches, proxies, operating systems, container environments, databases, etc.  These are referred to as *Beats modules*.  By deploying these configurations you will be populating Elasticsearch and Kibana with visualizations, dashboards, machine learning jobs, etc.  
 
-`kubectl create -f filebeat-setup.yaml`
-`kubectl create -f metricbeat-setup.yaml`
+```
+kubectl create -f filebeat-setup.yaml
+kubectl create -f metricbeat-setup.yaml
+```
 #### Note: Depending on your k8s Node configuration, you may not need to deploy Jounalbeat.  If your Nodes use journald for logging, then deploy Journalbeat, otherwise Filebeat will get the logs
 `kubectl create -f jojurnalbeat-setup.yaml`
 
+### Verify
+`kubectl get pods -n kube-system | grep beat`
+
+Verify that the setup pods complete
+Check the logs for the setup pods to ensure that they connected to Elasticsearch and Kibana (the setup pod connects to both)
+
 ### Deploy the Beat DaemonSets
-`kubectl create -f filebeat-kubernetes.yaml`
-`kubectl create -f metricbeat-kubernetes.yaml`
+```
+kubectl create -f filebeat-kubernetes.yaml
+kubectl create -f metricbeat-kubernetes.yaml
+```
 #### Same caveta as above, you may not need Journalbeat
 `kubectl create -f journalbeat-kubernetes.yaml`
 
 ### Verify
-`kubectl get pods -n kube-system`
+`kubectl get pods -n kube-system | grep beat`
 
-Verify that the filebeat-setup pod completes
-Verify that there is one filebeat pod per k8s Node running
-Check the logs for the setup pod and one of the DaemonSet filebeat pods to ensure that they connected to Elasticsearch and Kibana (the setup pod connects to both)
+Verify that there is one filebeat, metricbeat, and journalbeat pod per k8s Node running.
+
+Check the logs for and one of the DaemonSet pods to ensure that they connected to Elasticsearch. 
