@@ -26,9 +26,15 @@ Rather than putting the Elasticsearch and Kibana endpoints into the manifest fil
 Filebeat and Metricbeat provide the configuration for things like web servers, caches, proxies, operating systems, container environments, databases, etc.  These are referred to as *Beats modules*.  By deploying these configurations you will be populating Elasticsearch and Kibana with visualizations, dashboards, machine learning jobs, etc.  
 
 `kubectl create -f filebeat-setup.yaml`
+`kubectl create -f metricbeat-setup.yaml`
+#### Note: Depending on your k8s Node configuration, you may not need to deploy Jounalbeat.  If your Nodes use journald for logging, then deploy Journalbeat, otherwise Filebeat will get the logs
+`kubectl create -f jojurnalbeat-setup.yaml`
 
-### Deploy the Filebeat DaemonSet
+### Deploy the Beat DaemonSets
 `kubectl create -f filebeat-kubernetes.yaml`
+`kubectl create -f metricbeat-kubernetes.yaml`
+#### Same caveta as above, you may not need Journalbeat
+`kubectl create -f journalbeat-kubernetes.yaml`
 
 ### Verify
 `kubectl get pods -n kube-system`
