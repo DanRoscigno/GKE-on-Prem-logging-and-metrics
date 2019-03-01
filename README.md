@@ -30,7 +30,7 @@ kubectl create -f filebeat-setup.yaml
 kubectl create -f metricbeat-setup.yaml
 ```
 #### Note: Depending on your k8s Node configuration, you may not need to deploy Jounalbeat.  If your Nodes use journald for logging, then deploy Journalbeat, otherwise Filebeat will get the logs
-`kubectl create -f jojurnalbeat-setup.yaml`
+`kubectl create -f journalbeat-setup.yaml`
 
 ### Verify
 `kubectl get pods -n kube-system | grep beat`
