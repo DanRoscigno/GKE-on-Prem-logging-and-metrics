@@ -31,6 +31,8 @@ sudo vi /etc/elasticsearch/elasticsearch.yml
 Use the files from this dir as a guide to creating your `elasticsearch.yml` files, change the hostnames.
 
 ```
+sudo  /usr/share/elasticsearch/bin/elasticsearch-plugin install ingest-geoip
+sudo  /usr/share/elasticsearch/bin/elasticsearch-plugin install ingest-user-agent
 sudo systemctl daemon-reload
 sudo systemctl enable elasticsearch.service
 sudo reboot
