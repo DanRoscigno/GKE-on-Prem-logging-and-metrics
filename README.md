@@ -29,8 +29,6 @@ Filebeat and Metricbeat provide the configuration for things like web servers, c
 kubectl create -f filebeat-setup.yaml
 kubectl create -f metricbeat-setup.yaml
 ```
-#### Note: Depending on your k8s Node configuration, you may not need to deploy Jounalbeat.  If your Nodes use journald for logging, then deploy Journalbeat, otherwise Filebeat will get the logs
-`kubectl create -f journalbeat-setup.yaml`
 
 ### Verify
 `kubectl get pods -n kube-system | grep beat`
@@ -43,7 +41,7 @@ Check the logs for the setup pods to ensure that they connected to Elasticsearch
 kubectl create -f filebeat-kubernetes.yaml
 kubectl create -f metricbeat-kubernetes.yaml
 ```
-#### Same caveta as above, you may not need Journalbeat
+#### Note: Depending on your k8s Node configuration, you may not need to deploy Jounalbeat.  If your Nodes use journald for logging, then deploy Journalbeat, otherwise Filebeat will get the logs
 `kubectl create -f journalbeat-kubernetes.yaml`
 
 ### Verify
