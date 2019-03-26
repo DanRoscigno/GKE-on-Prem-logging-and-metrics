@@ -228,7 +228,7 @@ kind: Deployment
 metadata:
   name: redis-slave
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -262,32 +262,21 @@ metadata:
     app: guestbook
     tier: frontend
 spec:
-  # if your cluster supports it, uncomment the following to automatically create
-  # an external load-balanced IP for the frontend service.
   type: LoadBalancer
-  #type: NodePort
-  externalTrafficPolicy: Local
   ports:
   - port: 80
+    protocol: TCP
   selector:
     app: guestbook
     tier: frontend
----
-#apiVersion: extensions/v1beta1
-#kind: Ingress
-#metadata:
-#name: frontend-ingress
-#spec:
-#backend:
-#serviceName: frontend
-#servicePort: 80
+  loadBalancerIP: 10.0.10.42
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: frontend
 spec:
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
