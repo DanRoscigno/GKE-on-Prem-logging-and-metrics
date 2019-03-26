@@ -9,6 +9,7 @@ metadata:
     kubernetes.io/cluster-service: "true"
 data:
   journalbeat.yml: |-
+    setup.dashboards.enabled: true
     setup.template.settings:
       index.number_of_shards: 1
       index.codec: best_compression
@@ -33,11 +34,12 @@ spec:
       containers:
       - name: journalbeat-setup
         #imagePullPolicy: Always
-        image: docker.elastic.co/beats/journalbeat:6.6.1
+        image: docker.elastic.co/beats/journalbeat:6.6.2
         args: [
           "-c", "/etc/journalbeat.yml",
           "-e",
           "setup",
+
         ]
         env:
         - name: ELASTICSEARCH_HOSTS
