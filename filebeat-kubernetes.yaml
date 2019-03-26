@@ -89,6 +89,7 @@ data:
 
     output.elasticsearch:
       hosts: ${ELASTICSEARCH_HOSTS}
+      ilm.enabled: true
     
 ---
 apiVersion: extensions/v1beta1
@@ -110,8 +111,8 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: filebeat-dynamic
-        image: docker.elastic.co/beats/filebeat:6.6.0
-        imagePullPolicy: Always
+        image: docker.elastic.co/beats/filebeat:6.6.2
+        #imagePullPolicy: Always
         args: [
           "-c", "/etc/filebeat.yml",
           "-e",

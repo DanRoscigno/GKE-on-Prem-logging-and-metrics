@@ -27,6 +27,7 @@ data:
 
     output.elasticsearch:
       hosts: ${ELASTICSEARCH_HOSTS}
+      ilm.enabled: true
     
 ---
 apiVersion: extensions/v1beta1
@@ -48,7 +49,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: journalbeat-dynamic
-        image: docker.elastic.co/beats/journalbeat:7.0.0-beta1
+        image: docker.elastic.co/beats/journalbeat:7.0.0-SNAPSHOT
         imagePullPolicy: Always
         args: [
           "-c", "/etc/journalbeat.yml",
@@ -72,11 +73,15 @@ spec:
         - name: varlogjournal
           mountPath: /var/log/journal
           readOnly: true
-        - name: varlibdockercontainers
-          mountPath: /var/lib/docker/containers
+        - name: machineid
+          mountPath: /etc/machineid
           readOnly: true
-        - name: dockersock
-          mountPath: /var/run/docker.sock
+        - name: systemd
+          mountPath: /run/systemd
+          readOnly: true
+        - name: hostname
+          mountPath: /etc/hostname
+          readOnly: true
       volumes:
       - name: config
         configMap:
@@ -85,14 +90,18 @@ spec:
       - name: varlogjournal
         hostPath:
           path: /var/log/journal
-      - name: varlibdockercontainers
+      - name: machineid
         hostPath:
-          path: /var/lib/docker/containers
-      - name: dockersock
+          path: /etc/machine-id
+      - name: systemd
         hostPath:
-          path: /var/run/docker.sock
+          path: /run/systemd
+      - name: hostname
+        hostPath:
+          path: /etc/hostname
       - name: data
         emptyDir: {}
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding

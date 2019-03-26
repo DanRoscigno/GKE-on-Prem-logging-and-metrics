@@ -52,6 +52,7 @@ data:
 
     output.elasticsearch:
       hosts: ${ELASTICSEARCH_HOSTS}
+      ilm.enabled: true
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -140,7 +141,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: metricbeat
-        image: docker.elastic.co/beats/metricbeat:6.6.0
+        image: docker.elastic.co/beats/metricbeat:6.6.2
         args: [
           "-c", "/etc/metricbeat.yml",
           "-e",
@@ -266,7 +267,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: metricbeat
-        image: docker.elastic.co/beats/metricbeat:6.6.0
+        image: docker.elastic.co/beats/metricbeat:6.6.2
         args: [
           "-c", "/etc/metricbeat.yml",
           "-e",
