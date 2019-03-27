@@ -33,7 +33,7 @@ data:
               config:
                 - module: redis
                   log:
-                    prospector:
+                    input:
                       type: docker
                       containers.ids:
                         - ${data.kubernetes.container.id}
@@ -45,26 +45,12 @@ data:
               config:
                 - module: apache2
                   access:
-                    prospector:
+                    input:
                       type: docker
                       containers.ids:
                         - ${data.kubernetes.container.id}
                   error:
-                    prospector:
-                      type: docker
-                      containers.ids:
-                        - ${data.kubernetes.container.id}
-            - condition.equals:
-                kubernetes.labels.app: mysql
-              config:
-                - module: mysql
-                  error:
-                    prospector:
-                      type: docker
-                      containers.ids:
-                        - ${data.kubernetes.container.id}
-                  slowlog:
-                    prospector:
+                    input:
                       type: docker
                       containers.ids:
                         - ${data.kubernetes.container.id}
