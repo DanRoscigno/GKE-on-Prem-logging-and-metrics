@@ -91,18 +91,6 @@ data:
 
   kubernetes.yml: |-
 
-    - module: docker
-      metricsets:
-        - container
-        - cpu
-        - diskio
-        - healthcheck
-        - info
-        - memory
-        - network
-      hosts: ["unix:///var/run/docker.sock"]
-      period: 10s
-
     - module: kubernetes
       metricsets:
         - node
@@ -243,7 +231,7 @@ data:
         - state_pod
         - state_container
         # Uncomment this to get k8s events:
-        #- event
+        - event
       period: 10s
       host: ${NODE_NAME}
       hosts: ["kube-state-metrics:8080"]
