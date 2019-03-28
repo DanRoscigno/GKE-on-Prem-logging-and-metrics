@@ -47,7 +47,9 @@ Edit the guestbook.yaml manifest as appropriate and then deploy it.
 
 ### Verify
 Check to see that the application is deployed and reachable on your network:
+
 `kubectl get pods -n default`
+
 `kubectl get services -n default`
 
 Open a browser to the IP Address associated with the `frontend` service at port 80.
