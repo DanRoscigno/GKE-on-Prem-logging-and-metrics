@@ -45,6 +45,12 @@ Edit the guestbook.yaml manifest as appropriate and then deploy it.
 
 `kubectl create -f guestbook.yaml`
 
+### Verify
+Check to see that the application is deployed and reachable on your network:
+`kubectl get pods -n default`
+`kubectl get services -n default`
+
+Open a browser to the IP Address associated with the `frontend` service at port 80.
 ### Create secrets
 Rather than putting the Elasticsearch and Kibana endpoints into the manifest files they are provided to the Filebeat pods as k8s secrets.  Edit the files `elasticsearch-hosts-ports` and `kibana-host-port` and then create the secret:
 
