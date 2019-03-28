@@ -15,6 +15,31 @@ Logging and metrics tools like Filebeat, Fluentd, Metricbeat, Prometheus, etc. r
 ### Deploy example application
 This uses the Guestbook app from the Kubernetes docs.  The YAML has been concatenated into a single manifest, and Apache HTTP mod Status has been enabled for metrics gathering.
 
+Before you deploy the manifest have a look at the frontend service.  You may need to edit this service so that the service is exposed to your internal network.  The network topology of the lab where this example was developed has a load balancer in front of the GKE On-Prem environment, and so the service specifies an IP Address assocuiated with the load balancer.  Your configuration will likely be different.
+
+```
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  labels:
+    app: guestbook
+    tier: frontend
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: guestbook
+    tier: frontend
+  loadBalancerIP: 10.0.10.42
+---
+```
+
+Edit the guestbook.yaml manifest as appropriate and then deploy it.
+
 `kubectl create -f guestbook.yaml`
 
 ### Create secrets
