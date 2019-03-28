@@ -48,7 +48,11 @@ Edit the guestbook.yaml manifest as appropriate and then deploy it.
 ### Create secrets
 Rather than putting the Elasticsearch and Kibana endpoints into the manifest files they are provided to the Filebeat pods as k8s secrets.  Edit the files `elasticsearch-hosts-ports` and `kibana-host-port` and then create the secret:
 
-`kubectl create secret generic elastic-stack --from-file=./elasticsearch-hosts-ports --from-file=./kibana-host-port --namespace=kube-system`
+```
+kubectl create secret generic elastic-stack \
+  --from-file=./elasticsearch-hosts-ports \
+  --from-file=./kibana-host-port --namespace=kube-system
+```
 
 ### Deploy index patterns, visualizations, dashboards, and machine learning jobs
 Filebeat and Metricbeat provide the configuration for things like web servers, caches, proxies, operating systems, container environments, databases, etc.  These are referred to as *Beats modules*.  By deploying these configurations you will be populating Elasticsearch and Kibana with visualizations, dashboards, machine learning jobs, etc.  
