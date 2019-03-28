@@ -10,7 +10,10 @@ All of the rest of the commands will be run from the directory `GKE-on-Prem-logg
 ### Set the cluster-admin-binding
 Logging and metrics tools like Filebeat, Fluentd, Metricbeat, Prometheus, etc. run as DameonSets.  To deploy DaemonSets you need the cluster role binding `cluster-admin-binding`.  Create it now:
 
-`kubectl create clusterrolebinding cluster-admin-binding  --clusterrole=cluster-admin --user=<the email address associated with your GKE account>`
+```
+kubectl create clusterrolebinding cluster-admin-binding  \
+  --clusterrole=cluster-admin --user=$(gcloud config get-value account)
+```
 
 ### Deploy example application
 This uses the Guestbook app from the Kubernetes docs.  The YAML has been concatenated into a single manifest, and Apache HTTP mod Status has been enabled for metrics gathering.
