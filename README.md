@@ -90,3 +90,5 @@ kubectl create -f metricbeat-kubernetes.yaml
 Verify that there is one filebeat, metricbeat, and journalbeat pod per k8s Node running.
 
 Check the logs for and one of the DaemonSet pods to ensure that they connected to Elasticsearch. 
+
+View your logs and metrics in Kibana.
